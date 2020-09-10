@@ -54,7 +54,7 @@ public class Population
 
     private List<Gene> CrossChildren(List<Gene> children, Gene parent)
     {
-        var sliceAt = 20;
+        var sliceAt = parent.Chromosomes.Count()/2;
         var newGeneration = new List<Gene>();
         foreach (var gene in children)
         {
