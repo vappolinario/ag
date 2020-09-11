@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -6,17 +7,18 @@ using System.Linq;
 public class Gene : IComparable<Gene>, IEquatable<Gene>
 {
     public double Fitness { get; set; }
-    public List<int> Chromosomes { get; set; }
+    public BitArray Chromosomes { get; set; }
     public Position Position { get; set; }
     public List<Position> Route { get; set; }
 
     public Gene(int size = 40)
     {
         var random = new Random();
-        Chromosomes = Enumerable
-            .Range(0, size)
-            .Select(_ => random.Next(0,2))
-            .ToList();
+        Chromosomes = new BitArray(size);
+        for (int index = 0; index < Chromosomes.Length; index++)
+        {
+            Chromosomes.Set(index, random.NextDouble() >= 0.5);
+        }
         Fitness = 0;
         Route = new List<Position>();
     }
@@ -26,7 +28,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         Position = start;
         Route.Clear();
         Fitness = 0;
-        for (int index = 0; index < Chromosomes.Count(); index+=2)
+        for (int index = 0; index < Chromosomes.Length; index+=2)
         {
             if ( !Position.Equals(destiny) )
             {
@@ -49,7 +51,8 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
     {
         int x = Position.X;
         int y = Position.Y;
-        var movement = string.Join("", Chromosomes.GetRange(index, 2));
+        var movement =
+            $"{(Chromosomes[index] ? 1 : 0)}{(Chromosomes[index+1] ? 1 : 0)}";
         switch (movement)
         {
             case "00":
@@ -64,6 +67,8 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
             case "11":
                 y--;
                 break;
+            default:
+                throw new InvalidOperationException($"Invalid movement {movement}");
         }
         var temp = new Position { X = x, Y = y};
         if (!ValidatePosition(temp))
@@ -87,14 +92,20 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     public void Mutate(int threshold)
     {
-        Chromosomes = Chromosomes.Select(i => MutateBit(i, threshold)).ToList();
+        for (int index = 0; index < Chromosomes.Length; index++)
+        {
+           MutateBit(index, threshold);
+        }
     }
 
-    private int MutateBit(int chromosome, int threshold)
+    private void MutateBit(int chromosome, int threshold)
     {
         var random = new Random();
         var dice = random.Next(0, 1000);
-        return dice <= threshold ? 1 - chromosome : chromosome;
+        if ( dice <= threshold )
+        {
+            Chromosomes.Set(chromosome, !Chromosomes.Get(chromosome));
+        }
     }
 
     public int CompareTo([AllowNull] Gene other)

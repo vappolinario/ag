@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Population
 {
@@ -54,17 +55,18 @@ public class Population
 
     private List<Gene> CrossChildren(List<Gene> children, Gene parent)
     {
-        var sliceAt = parent.Chromosomes.Count()/2;
+        var sliceAt = parent.Chromosomes.Length/2;
         var newGeneration = new List<Gene>();
         foreach (var gene in children)
         {
-            var child = gene
-                .Chromosomes
-                .Select((chromosome, index) =>
-                        {
-                        return index <= sliceAt ? chromosome : parent.Chromosomes[index];
-                        })
-                .ToList();
+            var child = new BitArray(parent.Chromosomes.Length);
+            for (int index = 0; index < child.Length; index++)
+            {
+              child.Set(index,
+                      index <= sliceAt
+                      ? gene.Chromosomes.Get(index)
+                      : parent.Chromosomes.Get(index));
+            }
             newGeneration.Add(new Gene { Chromosomes = child });
         }
         return newGeneration;
