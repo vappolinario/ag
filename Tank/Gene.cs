@@ -101,7 +101,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     public override string ToString()
     {
-        return $"[{Fitness}] - [{Position}] - [{string.Join(",", Route)}] - [{Route.Count()}]";
+        return $"[{Fitness:F2}] - [{Route.Count()}] - [{string.Join(";", Route)}]";
     }
 }
 
