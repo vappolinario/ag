@@ -23,37 +23,32 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     internal void IterateRoute(Position start, Position destiny)
     {
+        Position = start;
         Route.Clear();
         Fitness = 0;
-        var current = start;
         for (int index = 0; index < Chromosomes.Count(); index+=2)
         {
-            var move = Move(index, current, destiny);
-            if ( move != null )
+            if ( !Position.Equals(destiny) )
             {
-                Route.Add(move);
-                current = move;
+                Move(index, destiny);
+                Route.Add(Position);
             }
-            Fitness += ComputeFitness(current, destiny);
+            Fitness += ComputeFitness(destiny);
         }
     }
 
-    private double ComputeFitness(Position current, Position destiny)
+    private double ComputeFitness(Position destiny)
     {
-        var distance = Math.Pow(destiny.X - current.X, 2);
-        distance += Math.Pow(destiny.Y - current.Y, 2);
+        var distance = Math.Pow(destiny.X - Position.X, 2);
+        distance += Math.Pow(destiny.Y - Position.Y, 2);
         distance = Math.Sqrt(distance);
         return 1f/(distance + Route.Count());
     }
 
-    private Position Move(int index, Position current, Position destiny)
+    private bool Move(int index, Position destiny)
     {
-        if ( current.Equals(destiny) )
-        {
-            return null;
-        }
-        int x = current.X;
-        int y = current.Y;
+        int x = Position.X;
+        int y = Position.Y;
         var movement = string.Join("", Chromosomes.GetRange(index, 2));
         switch (movement)
         {
@@ -70,8 +65,24 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
                 y--;
                 break;
         }
-        Position = new Position { X = x, Y = y};
-        return Position;
+        var temp = new Position { X = x, Y = y};
+        if (!ValidatePosition(temp))
+        {
+            return false;
+        }
+        Position = temp;
+        return true;
+    }
+
+    private bool ValidatePosition(Position position)
+    {
+        if ( position.X < 0 || position.X > 9 )
+            return false;
+
+        if (position.Y < 0 || position.Y > 9 )
+            return false;
+
+        return true;
     }
 
     public void Mutate(int threshold)
@@ -101,7 +112,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     public override string ToString()
     {
-        return $"[{Fitness:F2}] - [{Route.Count()}] - [{string.Join(";", Route)}]";
+        return $"[{Fitness:F4}] - [{Route.Count()}] - [{string.Join(";", Route)}]";
     }
 }
 
