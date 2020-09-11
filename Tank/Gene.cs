@@ -43,7 +43,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         var distance = Math.Pow(destiny.X - current.X, 2);
         distance += Math.Pow(destiny.Y - current.Y, 2);
         distance = Math.Sqrt(distance);
-        return distance == 0 ? 5000 : 1f/(distance + Route.Count());
+        return 1f/(distance + Route.Count());
     }
 
     private Position Move(int index, Position current, Position destiny)
