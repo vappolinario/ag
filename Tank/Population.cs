@@ -14,11 +14,11 @@ public class Population
             .ToList();
     }
 
-    public void Check(Position currentPosition, Position destiny)
+    public void Check(Position currentPosition, Position destiny, Map map)
     {
         foreach (var gene in Individuals)
         {
-            gene.IterateRoute(currentPosition, destiny);
+            gene.IterateRoute(currentPosition, destiny, map);
         }
         Individuals.Sort();
     }

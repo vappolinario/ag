@@ -6,20 +6,25 @@ namespace Tank
     {
         static void Main(string[] args)
         {
+            var map = new Map(10, 10);
             var population = new Population(50);
             var start = new Position { X = 0, Y = 0 };
             var destiny = new Position { X = 9, Y = 9 };
 
-            population.Check(start, destiny);
+            System.Console.WriteLine(map);
+            population.Check(start, destiny, map);
 
             for (int i = 0; i < 40; i++)
             {
                 population.Cross();
                 population.Mutate(12);
-                population.Check(start, destiny);
+                population.Check(start, destiny, map);
 
             }
-            Print(population);
+            //Print(population);
+            System.Console.WriteLine(population.Individuals[0]);
+            System.Console.WriteLine();
+            System.Console.WriteLine(map.DrawRoute(population.Individuals[0]));
         }
 
         private static void Print(Population population)

@@ -9,7 +9,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
     public double Fitness { get; set; }
     public BitArray Chromosomes { get; set; }
     public Position Position { get; set; }
-    public List<Position> Route { get; set; }
+    public List<Node> Route { get; set; }
 
     public Gene(int size = 40)
     {
@@ -20,10 +20,10 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
             Chromosomes.Set(index, random.NextDouble() >= 0.5);
         }
         Fitness = 0;
-        Route = new List<Position>();
+        Route = new List<Node>();
     }
 
-    internal void IterateRoute(Position start, Position destiny)
+    internal void IterateRoute(Position start, Position destiny, Map map)
     {
         Position = start;
         Route.Clear();
@@ -32,8 +32,11 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         {
             if ( !Position.Equals(destiny) )
             {
-                Move(index, destiny);
-                Route.Add(Position);
+                Move(index, destiny, map);
+                Route.Add(new Node {
+                            Position = Position,
+                            Visited = true
+                        });
             }
             Fitness += ComputeFitness(destiny);
         }
@@ -44,10 +47,11 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         var distance = Math.Pow(destiny.X - Position.X, 2);
         distance += Math.Pow(destiny.Y - Position.Y, 2);
         distance = Math.Sqrt(distance);
-        return 1f/(distance + Route.Count());
+        //return 1f/(distance + Route.Count());
+        return 1f/(distance);
     }
 
-    private bool Move(int index, Position destiny)
+    private bool Move(int index, Position destiny, Map map)
     {
         int x = Position.X;
         int y = Position.Y;
@@ -71,7 +75,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
                 throw new InvalidOperationException($"Invalid movement {movement}");
         }
         var temp = new Position { X = x, Y = y};
-        if (!ValidatePosition(temp))
+        if (!ValidatePosition(temp, map))
         {
             return false;
         }
@@ -79,7 +83,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         return true;
     }
 
-    private bool ValidatePosition(Position position)
+    private bool ValidatePosition(Position position, Map map)
     {
         if ( position.X < 0 || position.X > 9 )
             return false;
@@ -87,7 +91,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
         if (position.Y < 0 || position.Y > 9 )
             return false;
 
-        return true;
+        return !map.GetNode(position).Obstacle;
     }
 
     public void Mutate(int threshold)
