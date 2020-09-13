@@ -43,7 +43,6 @@ public class Map
             for (int y = 0; y < Height; y++)
             {
                 var tile = _tiles[y*Width+x];
-                //map.Append($"{(tile.Obstacle ? 'X' : tile.Visited ? '.' : ' ')}");
                 map.Append($"{(tile.Obstacle ? 'X' : ' ')}");
             }
             map.Append("]\n");
