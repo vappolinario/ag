@@ -24,14 +24,5 @@ namespace Tank
             System.Console.WriteLine(population.Individuals[0]);
             System.Console.WriteLine(map.DrawRoute(population.Individuals[0]));
         }
-
-        private static void Print(Population population)
-        {
-            Console.WriteLine(population);
-            foreach (var individual in population.Individuals)
-            {
-                Console.WriteLine(individual);
-            }
-        }
     }
 }
