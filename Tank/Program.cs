@@ -22,7 +22,6 @@ namespace Tank
 
             }
             System.Console.WriteLine(population.Individuals[0]);
-            System.Console.WriteLine();
             System.Console.WriteLine(map.DrawRoute(population.Individuals[0]));
         }
 
