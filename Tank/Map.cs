@@ -43,7 +43,7 @@ public class Map
 
     public override string ToString()
     {
-        return DrawRoute(new Gene());
+        return DrawRoute(new Gene(2));
     }
 
     public string DrawRoute(Gene gene)

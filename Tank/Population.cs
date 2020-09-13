@@ -6,11 +6,11 @@ public class Population
 {
     public List<Gene> Individuals { get; set; }
 
-    public Population(int size)
+    public Population(int size, int maxRoute)
     {
         Individuals = Enumerable
             .Range(1, size)
-            .Select(_ => new Gene())
+            .Select(_ => new Gene(maxRoute*2)) // two bits per movement
             .ToList();
     }
 
@@ -67,7 +67,9 @@ public class Population
                       ? gene.Chromosomes.Get(index)
                       : parent.Chromosomes.Get(index));
             }
-            newGeneration.Add(new Gene { Chromosomes = child });
+            var newGene = new Gene (child.Length);
+            gene.Chromosomes = child;
+            newGeneration.Add(newGene);
         }
         return newGeneration;
     }

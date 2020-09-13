@@ -11,7 +11,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
     public Position Position { get; set; }
     public List<Node> Route { get; set; }
 
-    public Gene(int size = 40)
+    public Gene(int size)
     {
         var random = new Random();
         Chromosomes = new BitArray(size);
@@ -84,10 +84,10 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     private bool ValidatePosition(Position position, Map map)
     {
-        if ( position.X < 0 || position.X > 9 )
+        if ( position.X < 0 || position.X >= map.Width )
             return false;
 
-        if (position.Y < 0 || position.Y > 9 )
+        if (position.Y < 0 || position.Y >= map.Height )
             return false;
 
         return !map.GetNode(position).Obstacle;

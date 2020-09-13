@@ -1,20 +1,25 @@
 ﻿using System;
+using System.CommandLine.DragonFruit;
 
 namespace Tank
 {
     class Program
     {
-        static void Main(string[] args)
+        /// <param name="width">Map width</param>
+        /// <param name="height">Map height</param>
+        /// <param name="populationSize">Size of each generation</param>
+        static void Main(int width = 10, int height = 10, int populationSize = 50)
         {
-            var map = new Map(10, 10);
-            var population = new Population(50);
+            var map = new Map(width, height, 0);
+            var mapTiles = width + height;
+            var population = new Population(populationSize, (int)(mapTiles*1.5));
             var start = new Position { X = 0, Y = 0 };
-            var destiny = new Position { X = 9, Y = 9 };
+            var destiny = new Position { X = width-1, Y = height-1 };
 
-            System.Console.WriteLine(map);
+            //System.Console.WriteLine(map);
             population.Check(start, destiny, map);
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < mapTiles; i++)
             {
                 population.Cross();
                 population.Mutate(12);
