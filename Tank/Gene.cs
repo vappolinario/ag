@@ -44,9 +44,7 @@ public class Gene : IComparable<Gene>, IEquatable<Gene>
 
     private double ComputeFitness(Position destiny)
     {
-        var distance = Math.Pow(destiny.X - Position.X, 2);
-        distance += Math.Pow(destiny.Y - Position.Y, 2);
-        distance = Math.Sqrt(distance);
+        var distance = Math.Max(Math.Abs(destiny.X-Position.X), Math.Abs(destiny.Y - Position.Y));
         return 1f/(distance);
     }
 
