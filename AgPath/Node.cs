@@ -1,12 +1,14 @@
-public class Node
+namespace AgPath
 {
-    public bool Obstacle { get; set; }
-    public bool Visited { get; set; }
-    public Position Position { get; set; }
-
-    public override string ToString()
+    public class Node
     {
-        return Position.ToString();
+        public bool Obstacle { get; set; }
+        public bool Visited { get; set; }
+        public Position Position { get; set; }
+
+        public override string ToString()
+        {
+            return Position.ToString();
+        }
     }
 }
-

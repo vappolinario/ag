@@ -1,18 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 
-public class Position :  System.IEquatable<Position>
-
+namespace AgPath
 {
-    public int X { get; set; }
-    public int Y { get; set; }
-
-    public bool Equals([AllowNull] Position other)
+    public class Position :  System.IEquatable<Position>
     {
-        return this.X.Equals(other.X) && this.Y.Equals(other.Y);
-    }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-    public override string ToString()
-    {
-        return $"{X},{Y}";
+        public bool Equals([AllowNull] Position other)
+        {
+            return this.X.Equals(other.X) && this.Y.Equals(other.Y);
+        }
+
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
     }
 }

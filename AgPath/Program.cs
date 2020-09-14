@@ -1,7 +1,4 @@
-﻿using System;
-using System.CommandLine.DragonFruit;
-
-namespace Tank
+﻿namespace AgPath
 {
     class Program
     {
@@ -16,7 +13,6 @@ namespace Tank
             var start = new Position { X = 0, Y = 0 };
             var destiny = new Position { X = width-1, Y = height-1 };
 
-            //System.Console.WriteLine(map);
             population.Check(start, destiny, map);
 
             for (int i = 0; i < mapTiles; i++)
