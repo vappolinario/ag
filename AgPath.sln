@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tank", "Tank\Tank.csproj", "{1660E5AE-93E4-4912-B421-D6DFAE72B34A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgPath", "AgPath\AgPath.csproj", "{1660E5AE-93E4-4912-B421-D6DFAE72B34A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{508B445D-EDD5-4C4E-98F5-AA558614C17E}"
 EndProject
