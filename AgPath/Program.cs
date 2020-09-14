@@ -24,7 +24,7 @@ namespace AgPath
             var map = new Map(width, height, obstacleRate);
             var mapTiles = width + height;
             var maxRoute = (int)(mapTiles * 1.5);
-            var engine = GetEngine(fitnessFormula);
+            var engine = FitnessFactory.GetEngine(fitnessFormula);
             var population = new Population(populationSize, maxRoute, engine);
             var start = new Position { X = 0, Y = 0 };
             var destiny = new Position { X = width - 1, Y = height - 1 };
@@ -42,20 +42,6 @@ namespace AgPath
             }
             System.Console.WriteLine(population.Individuals[0]);
             System.Console.WriteLine(map.DrawRoute(population.Individuals[0]));
-        }
-
-        private static IFitnessEngine GetEngine(Formula formula)
-        {
-            switch (formula)
-            {
-                case Formula.Chebyshev:
-                    return new ChebyshevFitness();
-                case Formula.Taxicab:
-                    return new TaxicabFitness();
-                case Formula.Euclidean:
-                default:
-                    return new EuclideanFitness();
-            }
         }
     }
 }
