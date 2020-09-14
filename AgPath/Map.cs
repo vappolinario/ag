@@ -59,10 +59,10 @@ namespace AgPath
             var map = new StringBuilder();
             map.Append(new String('-', Width + 2));
             map.Append('\n');
-            for (int x = 0; x < Width; x++)
+            for (int y = 0; y < Height; y++)
             {
                 map.Append('[');
-                for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
                 {
                     var tile = _tiles[y * Width + x];
                     var route = gene.Route.FirstOrDefault(move => move.Position.X == x && move.Position.Y == y);
