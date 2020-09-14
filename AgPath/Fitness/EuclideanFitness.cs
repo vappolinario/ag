@@ -9,7 +9,7 @@ namespace AgPath.Fitness
             var distance = Math.Pow(destiny.X - current.X, 2);
             distance += Math.Pow(destiny.Y - current.Y, 2);
             distance = Math.Sqrt(distance);
-            return 1f/distance;
+            return 1f / distance;
         }
     }
 }

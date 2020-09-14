@@ -9,9 +9,9 @@
         {
             var map = new Map(width, height, 0);
             var mapTiles = width + height;
-            var population = new Population(populationSize, (int)(mapTiles*1.5));
+            var population = new Population(populationSize, (int)(mapTiles * 1.5));
             var start = new Position { X = 0, Y = 0 };
-            var destiny = new Position { X = width-1, Y = height-1 };
+            var destiny = new Position { X = width - 1, Y = height - 1 };
 
             population.Check(start, destiny, map);
 

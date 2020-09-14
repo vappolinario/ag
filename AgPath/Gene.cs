@@ -34,15 +34,16 @@ namespace AgPath
             Position = start;
             Route.Clear();
             Fitness = 0;
-            for (int index = 0; index < Chromosomes.Length; index+=2)
+            for (int index = 0; index < Chromosomes.Length; index += 2)
             {
-                if ( !Position.Equals(destiny) )
+                if (!Position.Equals(destiny))
                 {
                     Move(index, destiny, map);
-                    Route.Add(new Node {
-                            Position = Position,
-                            Visited = true
-                            });
+                    Route.Add(new Node
+                    {
+                        Position = Position,
+                        Visited = true
+                    });
                 }
                 Fitness += _engine.ComputeFitness(Position, destiny);
             }
@@ -53,7 +54,7 @@ namespace AgPath
             int x = Position.X;
             int y = Position.Y;
             var movement =
-                $"{(Chromosomes[index] ? 1 : 0)}{(Chromosomes[index+1] ? 1 : 0)}";
+                $"{(Chromosomes[index] ? 1 : 0)}{(Chromosomes[index + 1] ? 1 : 0)}";
             switch (movement)
             {
                 case "00":
@@ -71,7 +72,7 @@ namespace AgPath
                 default:
                     throw new InvalidOperationException($"Invalid movement {movement}");
             }
-            var temp = new Position { X = x, Y = y};
+            var temp = new Position { X = x, Y = y };
             if (!ValidatePosition(temp, map))
             {
                 return false;
@@ -82,10 +83,10 @@ namespace AgPath
 
         private bool ValidatePosition(Position position, Map map)
         {
-            if ( position.X < 0 || position.X >= map.Width )
+            if (position.X < 0 || position.X >= map.Width)
                 return false;
 
-            if (position.Y < 0 || position.Y >= map.Height )
+            if (position.Y < 0 || position.Y >= map.Height)
                 return false;
 
             return !map.GetNode(position).Obstacle;
@@ -103,7 +104,7 @@ namespace AgPath
         {
             var random = new Random();
             var dice = random.Next(0, 1000);
-            if ( dice <= threshold )
+            if (dice <= threshold)
             {
                 Chromosomes.Set(chromosome, !Chromosomes.Get(chromosome));
             }

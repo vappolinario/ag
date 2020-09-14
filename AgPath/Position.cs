@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace AgPath
 {
-    public class Position :  System.IEquatable<Position>
+    public class Position : System.IEquatable<Position>
     {
         public int X { get; set; }
         public int Y { get; set; }

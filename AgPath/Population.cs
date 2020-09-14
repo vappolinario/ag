@@ -14,7 +14,7 @@ namespace AgPath
             var engine = new TaxicabFitness();
             Individuals = Enumerable
                 .Range(1, size)
-                .Select(_ => new Gene(maxRoute*2, engine)) // two bits per movement
+                .Select(_ => new Gene(maxRoute * 2, engine)) // two bits per movement
                 .ToList();
         }
 
@@ -30,11 +30,11 @@ namespace AgPath
         public void Cross()
         {
             var result = new List<Gene>();
-            var parents = Individuals.GetRange(2, (int)(Individuals.Count()*0.2f));
-            var percent = (int)(Individuals.Count()*0.15f);
+            var parents = Individuals.GetRange(2, (int)(Individuals.Count() * 0.2f));
+            var percent = (int)(Individuals.Count() * 0.15f);
             var childrenOfFirst = Individuals.GetRange(2, percent);
-            var childrenOfSecond = Individuals.GetRange(2+percent, percent);
-            var rest = Individuals.Skip(parents.Count()+2);
+            var childrenOfSecond = Individuals.GetRange(2 + percent, percent);
+            var rest = Individuals.Skip(parents.Count() + 2);
 
             result.Add(Individuals[0]);
             result.Add(Individuals[1]);
@@ -59,7 +59,7 @@ namespace AgPath
 
         private List<Gene> CrossChildren(List<Gene> children, Gene parent)
         {
-            var sliceAt = parent.Chromosomes.Length/2;
+            var sliceAt = parent.Chromosomes.Length / 2;
             var newGeneration = new List<Gene>();
             foreach (var gene in children)
             {
@@ -71,7 +71,7 @@ namespace AgPath
                             ? gene.Chromosomes.Get(index)
                             : parent.Chromosomes.Get(index));
                 }
-                var newGene = new Gene (child.Length, new TaxicabFitness());
+                var newGene = new Gene(child.Length, new TaxicabFitness());
                 gene.Chromosomes = child;
                 newGeneration.Add(newGene);
             }
