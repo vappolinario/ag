@@ -8,10 +8,11 @@ namespace AgPath
     public class Population
     {
         public List<Gene> Individuals { get; set; }
+        private readonly IFitnessEngine _engine;
 
-        public Population(int size, int maxRoute)
+        public Population(int size, int maxRoute, IFitnessEngine engine)
         {
-            var engine = new TaxicabFitness();
+            _engine = engine;
             Individuals = Enumerable
                 .Range(1, size)
                 .Select(_ => new Gene(maxRoute * 2, engine)) // two bits per movement
@@ -71,7 +72,7 @@ namespace AgPath
                             ? gene.Chromosomes.Get(index)
                             : parent.Chromosomes.Get(index));
                 }
-                var newGene = new Gene(child.Length, new TaxicabFitness());
+                var newGene = new Gene(child.Length, _engine);
                 gene.Chromosomes = child;
                 newGeneration.Add(newGene);
             }
