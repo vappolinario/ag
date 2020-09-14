@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tank\Tank.csproj" />
     <ProjectReference Include="..\AgPath\AgPath.csproj" />
   </ItemGroup>
 
