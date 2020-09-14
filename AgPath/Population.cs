@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using AgPath.Fitness;
 
 namespace AgPath
 {
@@ -10,9 +11,10 @@ namespace AgPath
 
         public Population(int size, int maxRoute)
         {
+            var engine = new ChebyshevFitness();
             Individuals = Enumerable
                 .Range(1, size)
-                .Select(_ => new Gene(maxRoute*2)) // two bits per movement
+                .Select(_ => new Gene(maxRoute*2, engine)) // two bits per movement
                 .ToList();
         }
 
@@ -69,7 +71,7 @@ namespace AgPath
                             ? gene.Chromosomes.Get(index)
                             : parent.Chromosomes.Get(index));
                 }
-                var newGene = new Gene (child.Length);
+                var newGene = new Gene (child.Length, new ChebyshevFitness());
                 gene.Chromosomes = child;
                 newGeneration.Add(newGene);
             }

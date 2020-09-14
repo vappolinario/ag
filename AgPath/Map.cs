@@ -45,7 +45,7 @@ namespace AgPath
 
         public override string ToString()
         {
-            return DrawRoute(new Gene(2));
+            return DrawRoute(new Gene(2, null));
         }
 
         public string DrawRoute(Gene gene)

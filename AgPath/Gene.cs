@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using AgPath.Fitness;
 
 namespace AgPath
 {
@@ -13,8 +14,11 @@ namespace AgPath
         public Position Position { get; set; }
         public List<Node> Route { get; set; }
 
-        public Gene(int size)
+        private readonly IFitnessEngine _engine;
+
+        public Gene(int size, IFitnessEngine fitnessEngine)
         {
+            _engine = fitnessEngine;
             var random = new Random();
             Chromosomes = new BitArray(size);
             for (int index = 0; index < Chromosomes.Length; index++)
@@ -40,14 +44,8 @@ namespace AgPath
                             Visited = true
                             });
                 }
-                Fitness += ComputeFitness(destiny);
+                Fitness += _engine.ComputeFitness(Position, destiny);
             }
-        }
-
-        private double ComputeFitness(Position destiny)
-        {
-            var distance = Math.Max(Math.Abs(destiny.X-Position.X), Math.Abs(destiny.Y - Position.Y));
-            return 1f/(distance);
         }
 
         private bool Move(int index, Position destiny, Map map)
