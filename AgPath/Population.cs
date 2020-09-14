@@ -11,7 +11,7 @@ namespace AgPath
 
         public Population(int size, int maxRoute)
         {
-            var engine = new ChebyshevFitness();
+            var engine = new TaxicabFitness();
             Individuals = Enumerable
                 .Range(1, size)
                 .Select(_ => new Gene(maxRoute*2, engine)) // two bits per movement
@@ -30,8 +30,8 @@ namespace AgPath
         public void Cross()
         {
             var result = new List<Gene>();
-            var parents = Individuals.GetRange(2, Individuals.Count()*20/100);
-            var percent = Individuals.Count()*15/100;
+            var parents = Individuals.GetRange(2, (int)(Individuals.Count()*0.2f));
+            var percent = (int)(Individuals.Count()*0.15f);
             var childrenOfFirst = Individuals.GetRange(2, percent);
             var childrenOfSecond = Individuals.GetRange(2+percent, percent);
             var rest = Individuals.Skip(parents.Count()+2);
@@ -71,7 +71,7 @@ namespace AgPath
                             ? gene.Chromosomes.Get(index)
                             : parent.Chromosomes.Get(index));
                 }
-                var newGene = new Gene (child.Length, new ChebyshevFitness());
+                var newGene = new Gene (child.Length, new TaxicabFitness());
                 gene.Chromosomes = child;
                 newGeneration.Add(newGene);
             }
